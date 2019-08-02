@@ -44,4 +44,8 @@ export class TodosService {
     deleteTodo(index: number): void {
         this.todos.splice(index, 1);
     }
+
+    getItemsLeft(): number {
+        return this.todos.filter(todo => !todo.completed).length;
+    }
 }
