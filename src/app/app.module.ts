@@ -6,6 +6,7 @@ import {TodosInputComponent} from "./todos-input/todos-input.component";
 import {FormsModule} from "@angular/forms";
 import {TodosListComponent} from "./todos-list/todos-list.component";
 import {TodosFooterComponent} from "./todos-footer/todos-footer.component";
+import {TodosService} from "./todos-service";
 
 @NgModule({
     declarations: [
@@ -18,7 +19,9 @@ import {TodosFooterComponent} from "./todos-footer/todos-footer.component";
         BrowserModule,
         FormsModule
     ],
-    providers: [],
+    providers: [
+        TodosService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

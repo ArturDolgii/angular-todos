@@ -1,11 +1,12 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {ITodo} from "../todo";
+import {TodosService} from "../todos-service";
 
 @Component({
     selector: "todos-list",
     template: `
         <ul class="list-group pt-md-5">
-            <li *ngFor="let todo of todosList" class="list-group-item">
+            <li *ngFor="let todo of todosList; let i = index;" class="list-group-item">
                 <div class="form-check text-left">
                     <div class="float-left">
                         <label class="form-check-label">
@@ -14,7 +15,9 @@ import {ITodo} from "../todo";
                         </label>
                     </div>
                     <div class="float-right">
-                        <a href="">X</a>
+                        <button type="button"
+                                class="btn btn-link"
+                                (click)="deleteTodo(i)">X</button>
                     </div>
                 </div>
             </li>
@@ -22,22 +25,18 @@ import {ITodo} from "../todo";
     `,
     styles: [".completed { text-decoration: line-through; }"]
 })
-export class TodosListComponent {
-    todosList: ITodo[] = [
-        {
-            id: 1,
-            completed: false,
-            text: "a1"
-        },
-        {
-            id: 2,
-            completed: false,
-            text: "a2"
-        },
-        {
-            id: 3,
-            completed: true,
-            text: "a3"
-        }
-    ];
+export class TodosListComponent implements OnInit {
+    todosList: ITodo[];
+
+    constructor(private todosService: TodosService) {
+        this.todosService = todosService;
+    }
+
+    ngOnInit(): void {
+        this.todosList = this.todosService.getTodos();
+    }
+
+    deleteTodo(index: number): void {
+        this.todosService.deleteTodo(index);
+    }
 }
