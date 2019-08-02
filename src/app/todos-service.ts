@@ -3,23 +3,7 @@ import {ITodo} from "./todo";
 
 @Injectable()
 export class TodosService {
-    private todos: ITodo[] = [
-        {
-            id: 1,
-            completed: false,
-            text: "a1"
-        },
-        {
-            id: 2,
-            completed: false,
-            text: "a2"
-        },
-        {
-            id: 3,
-            completed: true,
-            text: "a3"
-        }
-    ];
+    private todos: ITodo[];
 
     private getTodosNextId(): number {
         let id: number;
@@ -34,6 +18,10 @@ export class TodosService {
     }
 
     getTodos(): ITodo[] {
+        if (!this.todos) {
+            this.todos = [];
+        }
+
         return this.todos;
     }
 
@@ -47,5 +35,17 @@ export class TodosService {
 
     getItemsLeft(): number {
         return this.todos.filter(todo => !todo.completed).length;
+    }
+
+    clearCompleted(): void {
+        let i = this.todos.length;
+
+        while (--i) {
+            const todo = this.todos[ i ];
+
+            if (todo.completed) {
+                this.todos.splice(i, 1);
+            }
+        }
     }
 }

@@ -28,7 +28,8 @@ import {TodosService} from "../todos-service";
             </li>
             <li class="list-inline-item float-right">
                 <button type="button"
-                        class="btn btn-link">Clear completed</button>
+                        class="btn btn-link"
+                        (click)="clearCompleted()">Clear completed</button>
             </li>
         </ul>
     `,
@@ -43,5 +44,9 @@ export class TodosFooterComponent {
 
     get itemsLeft(): number {
         return this._itemsLeft = this.todosService.getItemsLeft();
+    }
+
+    clearCompleted(): void {
+        this.todosService.clearCompleted();
     }
 }
