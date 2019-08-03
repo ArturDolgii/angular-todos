@@ -40,7 +40,7 @@ export class TodosService {
     clearCompleted(): void {
         let i = this.todos.length;
 
-        while (--i) {
+        while (i--) {
             const todo = this.todos[ i ];
 
             if (todo.completed) {

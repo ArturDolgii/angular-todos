@@ -7,13 +7,15 @@ import {FormsModule} from "@angular/forms";
 import {TodosListComponent} from "./todos-list/todos-list.component";
 import {TodosFooterComponent} from "./todos-footer/todos-footer.component";
 import {TodosService} from "./todos-service";
+import {TodosListFilterPipe} from "./todos-list/todo-list-filter.pipe";
 
 @NgModule({
     declarations: [
         AppComponent,
         TodosInputComponent,
         TodosListComponent,
-        TodosFooterComponent
+        TodosFooterComponent,
+        TodosListFilterPipe
     ],
     imports: [
         BrowserModule,

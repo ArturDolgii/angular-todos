@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import {TodosFilterType} from "./todo";
 
 @Component({
     selector: "app-root",
@@ -10,8 +11,8 @@ import {Component} from "@angular/core";
                     <div class="row justify-content-center">
                         <div class="col-md-6">
                             <todos-input></todos-input>
-                            <todos-list></todos-list>
-                            <todos-footer></todos-footer>
+                            <todos-list [activeFilter]="activeFilter"></todos-list>
+                            <todos-footer (onFilterChange)="onFilterChange($event)"></todos-footer>
                         </div>
                     </div>
                 </div>
@@ -21,4 +22,9 @@ import {Component} from "@angular/core";
     styles: []
 })
 export class AppComponent {
+    activeFilter: TodosFilterType;
+
+    onFilterChange(filter: TodosFilterType) {
+        this.activeFilter = filter;
+    }
 }

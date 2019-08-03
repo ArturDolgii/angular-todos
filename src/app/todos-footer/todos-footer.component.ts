@@ -1,5 +1,6 @@
-import {Component} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 import {TodosService} from "../todos-service";
+import {TodosFilterType} from "../todo";
 
 @Component({
     selector: "todos-footer",
@@ -12,17 +13,21 @@ import {TodosService} from "../todos-service";
                 <ul class="list-inline">
                     <li class="list-inline-item">
                         <button type="button"
-                                class="btn btn-link">
-                            <span class="footer-text-small">All</span>
-                        </button>
+                                class="btn btn-link"
+                                [ngClass]="{'active': !activeFilter || activeFilter === 'ALL'}"
+                                (click)="renderTodosByFilter('ALL')">All</button>
                     </li>
                     <li class="list-inline-item">
                         <button type="button"
-                                class="btn btn-link">Active</button>
+                                class="btn btn-link"
+                                [ngClass]="{'active': activeFilter === 'ACTIVE'}"
+                                (click)="renderTodosByFilter('ACTIVE')">Active</button>
                     </li>
                     <li class="list-inline-item">
                         <button type="button"
-                                class="btn btn-link">Completed</button>
+                                class="btn btn-link"
+                                [ngClass]="{'active': activeFilter === 'COMPLETED'}"
+                                (click)="renderTodosByFilter('COMPLETED')">Completed</button>
                     </li>
                 </ul>
             </li>
@@ -33,10 +38,14 @@ import {TodosService} from "../todos-service";
             </li>
         </ul>
     `,
-    styles: []
+    styles: [".active { color: dimgray; text-decoration: none; }"]
 })
 export class TodosFooterComponent {
     private _itemsLeft: number;
+
+    activeFilter: TodosFilterType;
+
+    @Output() onFilterChange: EventEmitter<TodosFilterType> = new EventEmitter<TodosFilterType>();
 
     constructor(private todosService: TodosService) {
         this.todosService = todosService;
@@ -48,5 +57,10 @@ export class TodosFooterComponent {
 
     clearCompleted(): void {
         this.todosService.clearCompleted();
+    }
+
+    renderTodosByFilter(filter: TodosFilterType): void {
+        this.activeFilter  = filter;
+        this.onFilterChange.emit(filter);
     }
 }

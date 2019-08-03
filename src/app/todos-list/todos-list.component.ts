@@ -1,12 +1,14 @@
-import {Component, OnInit} from "@angular/core";
-import {ITodo} from "../todo";
+import {Component, Input, OnInit} from "@angular/core";
+import {ITodo, TodosFilterType} from "../todo";
 import {TodosService} from "../todos-service";
 
 @Component({
     selector: "todos-list",
     template: `
-        <ul class="list-group pt-md-5">
-            <li *ngFor="let todo of todosList; let i = index;" class="list-group-item">
+        <ul class="list-group pt-md-3">
+            <li *ngFor="let todo of (todosList | todosFilter: activeFilter); let i = index;"
+                class="list-group-item"
+                [ngClass]="{'d-none': todo.hidden}">
                 <div class="form-check text-left">
                     <div class="float-left">
                         <label class="form-check-label">
@@ -27,6 +29,8 @@ import {TodosService} from "../todos-service";
 })
 export class TodosListComponent implements OnInit {
     todosList: ITodo[];
+
+    @Input() activeFilter: TodosFilterType;
 
     constructor(private todosService: TodosService) {
         this.todosService = todosService;
