@@ -5,7 +5,7 @@ import {TodosFilterType} from "../todo";
 @Component({
     selector: "todos-footer",
     template: `
-        <ul class="list-inline">
+        <ul class="list-inline" [ngClass]="{ 'd-none': getTodosCount() === 0 }">
             <li class="list-inline-item float-left">
                 <span class="btn">{{itemsLeft}} {{itemsLeft === 1 ? "item left" : "items left"}}</span>
             </li>
@@ -62,5 +62,9 @@ export class TodosFooterComponent {
     renderTodosByFilter(filter: TodosFilterType): void {
         this.activeFilter  = filter;
         this.onFilterChange.emit(filter);
+    }
+
+    getTodosCount(): number {
+        return this.todosService.getTodos().length;
     }
 }
