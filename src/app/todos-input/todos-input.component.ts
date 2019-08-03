@@ -4,13 +4,7 @@ import {TodosService} from "../todos-service";
 
 @Component({
     selector: "todos-input",
-    template: `
-        <input type="text"
-               class="form-control"
-               placeholder="What needs to be done?"
-               [(ngModel)]="text"
-               (keyup.enter)="addTodo(text)">
-    `,
+    templateUrl: "todos-input.component.html",
     styles: []
 })
 export class TodosInputComponent {
@@ -28,7 +22,8 @@ export class TodosInputComponent {
         const todo: ITodo = {
             id: -1,
             completed: false,
-            text
+            text,
+            hidden: false
         };
 
         this.todosService.addTodo(todo);

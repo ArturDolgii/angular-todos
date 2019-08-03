@@ -1,0 +1,5 @@
+<input type="text"
+       class="form-control"
+       placeholder="What needs to be done?"
+       [(ngModel)]="text"
+       (keyup.enter)="addTodo(text)">
